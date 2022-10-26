@@ -53,6 +53,11 @@ func TestInvalidDepositInFCU(t *testing.T) {
 			Number: l2GenesisBlock.NumberU64(),
 		},
 		L2Time: l2GenesisBlock.Time(),
+		SystemConfig: eth.SystemConfig{
+			BatcherAddr: cfg.DeployConfig.BatchSenderAddress,
+			Overhead:    eth.Bytes32(common.BigToHash(new(big.Int).SetUint64(cfg.DeployConfig.GasPriceOracleOverhead))),
+			Scalar:      eth.Bytes32(common.BigToHash(new(big.Int).SetUint64(cfg.DeployConfig.GasPriceOracleScalar))),
+		},
 	}
 
 	node, _, err := initL2Geth("l2", big.NewInt(int64(cfg.DeployConfig.L2ChainID)), l2Genesis, writeDefaultJWT(t))
@@ -76,7 +81,7 @@ func TestInvalidDepositInFCU(t *testing.T) {
 	require.Nil(t, err)
 
 	// Create the test data (L1 Info Tx and then always failing deposit)
-	l1Info, err := derive.L1InfoDepositBytes(1, l1Block)
+	l1Info, err := derive.L1InfoDepositBytes(1, l1Block, rollupGenesis.SystemConfig)
 	require.Nil(t, err)
 
 	// Create a deposit from alice that will always fail (not enough funds)
