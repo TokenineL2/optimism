@@ -11,6 +11,17 @@ import (
 	"testing"
 	"time"
 
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/ethereum/go-ethereum/core"
+	geth_eth "github.com/ethereum/go-ethereum/eth"
+	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/ethereum/go-ethereum/log"
+	"github.com/ethereum/go-ethereum/node"
+	"github.com/ethereum/go-ethereum/rpc"
+	mocknet "github.com/libp2p/go-libp2p/p2p/net/mock"
+	"github.com/stretchr/testify/require"
+
 	bss "github.com/ethereum-optimism/optimism/op-batcher"
 	"github.com/ethereum-optimism/optimism/op-bindings/predeploys"
 	"github.com/ethereum-optimism/optimism/op-chain-ops/genesis"
@@ -24,16 +35,6 @@ import (
 	"github.com/ethereum-optimism/optimism/op-node/testlog"
 	l2os "github.com/ethereum-optimism/optimism/op-proposer"
 	oplog "github.com/ethereum-optimism/optimism/op-service/log"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/common/hexutil"
-	"github.com/ethereum/go-ethereum/core"
-	geth_eth "github.com/ethereum/go-ethereum/eth"
-	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/ethereum/go-ethereum/log"
-	"github.com/ethereum/go-ethereum/node"
-	"github.com/ethereum/go-ethereum/rpc"
-	mocknet "github.com/libp2p/go-libp2p/p2p/net/mock"
-	"github.com/stretchr/testify/require"
 )
 
 var (
@@ -275,6 +276,11 @@ func (cfg SystemConfig) Start() (*System, error) {
 					Number: 0,
 				},
 				L2Time: uint64(cfg.DeployConfig.L1GenesisBlockTimestamp),
+				SystemConfig: eth.SystemConfig{
+					BatcherAddr: cfg.DeployConfig.BatchSenderAddress,
+					Overhead:    eth.Bytes32(common.BigToHash(new(big.Int).SetUint64(cfg.DeployConfig.GasPriceOracleOverhead))),
+					Scalar:      eth.Bytes32(common.BigToHash(new(big.Int).SetUint64(cfg.DeployConfig.GasPriceOracleScalar))),
+				},
 			},
 			BlockTime:              cfg.DeployConfig.L2BlockTime,
 			MaxSequencerDrift:      cfg.DeployConfig.MaxSequencerDrift,
@@ -285,8 +291,8 @@ func (cfg SystemConfig) Start() (*System, error) {
 			P2PSequencerAddress:    cfg.DeployConfig.P2PSequencerAddress,
 			FeeRecipientAddress:    l2Genesis.Coinbase,
 			BatchInboxAddress:      cfg.DeployConfig.BatchInboxAddress,
-			BatchSenderAddress:     cfg.DeployConfig.BatchSenderAddress,
 			DepositContractAddress: predeploys.DevOptimismPortalAddr,
+			L1SystemConfigAddress:  predeploys.DevSystemConfigAddr,
 		}
 	}
 	defaultConfig := makeRollupConfig()
