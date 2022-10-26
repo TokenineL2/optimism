@@ -40,6 +40,8 @@ type DeployConfig struct {
 	L2OutputOracleOwner              common.Address `json:"l2OutputOracleOwner"`
 	L2OutputOracleGenesisL2Output    common.Hash    `json:"l2OutputOracleGenesisL2Output"`
 
+	SystemConfigOwner common.Address `json:"systemConfigOwner"`
+
 	L1BlockTime                 uint64         `json:"l1BlockTime"`
 	L1GenesisBlockTimestamp     hexutil.Uint64 `json:"l1GenesisBlockTimestamp"`
 	L1GenesisBlockNonce         hexutil.Uint64 `json:"l1GenesisBlockNonce"`
@@ -71,7 +73,6 @@ type DeployConfig struct {
 	GasPriceOracleOwner         common.Address `json:"gasPriceOracleOwner"`
 	GasPriceOracleOverhead      uint64         `json:"gasPriceOracleOverhead"`
 	GasPriceOracleScalar        uint64         `json:"gasPriceOracleScalar"`
-	GasPriceOracleDecimals      uint           `json:"gasPriceOracleDecimals"`
 
 	DeploymentWaitConfirmations int `json:"deploymentWaitConfirmations"`
 
@@ -164,10 +165,7 @@ func NewL2StorageConfig(config *DeployConfig, block *types.Block, l2Addrs *L2Add
 		"msgNonce":         0,
 	}
 	storage["GasPriceOracle"] = state.StorageValues{
-		"_owner":   config.GasPriceOracleOwner,
-		"overhead": config.GasPriceOracleOverhead,
-		"scalar":   config.GasPriceOracleScalar,
-		"decimals": config.GasPriceOracleDecimals,
+		"_owner": config.GasPriceOracleOwner,
 	}
 	storage["SequencerFeeVault"] = state.StorageValues{
 		"l1FeeWallet": config.OptimismL1FeeRecipient,
@@ -178,6 +176,9 @@ func NewL2StorageConfig(config *DeployConfig, block *types.Block, l2Addrs *L2Add
 		"basefee":        block.BaseFee(),
 		"hash":           block.Hash(),
 		"sequenceNumber": 0,
+		"batcherHash":    config.BatchSenderAddress.Hash(),
+		"l1FeeOverhead":  config.GasPriceOracleOverhead,
+		"l1FeeScalar":    config.GasPriceOracleScalar,
 	}
 	storage["LegacyERC20ETH"] = state.StorageValues{
 		"bridge":      predeploys.L2StandardBridge,
