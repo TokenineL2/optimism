@@ -234,6 +234,8 @@ type PayloadAttributes struct {
 	Transactions []Data `json:"transactions,omitempty"`
 	// NoTxPool to disable adding any transactions from the transaction-pool.
 	NoTxPool bool `json:"noTxPool,omitempty"`
+	// GasLimit override
+	GasLimit *Uint64Quantity `json:"gasLimit,omitempty"`
 }
 
 type ExecutePayloadStatus string
@@ -322,4 +324,5 @@ type SystemConfig struct {
 	BatcherAddr common.Address `json:"batcherAddr"`
 	Overhead    Bytes32        `json:"overhead"`
 	Scalar      Bytes32        `json:"scalar"`
+	GasLimit    uint64         `json:"gasLimit"`
 }

@@ -281,6 +281,7 @@ func (cfg SystemConfig) Start() (*System, error) {
 					BatcherAddr: cfg.DeployConfig.BatchSenderAddress,
 					Overhead:    eth.Bytes32(common.BigToHash(new(big.Int).SetUint64(cfg.DeployConfig.GasPriceOracleOverhead))),
 					Scalar:      eth.Bytes32(common.BigToHash(new(big.Int).SetUint64(cfg.DeployConfig.GasPriceOracleScalar))),
+					GasLimit:    uint64(cfg.DeployConfig.L2GenesisBlockGasLimit),
 				},
 			},
 			BlockTime:              cfg.DeployConfig.L2BlockTime,

@@ -57,6 +57,7 @@ func TestInvalidDepositInFCU(t *testing.T) {
 			BatcherAddr: cfg.DeployConfig.BatchSenderAddress,
 			Overhead:    eth.Bytes32(common.BigToHash(new(big.Int).SetUint64(cfg.DeployConfig.GasPriceOracleOverhead))),
 			Scalar:      eth.Bytes32(common.BigToHash(new(big.Int).SetUint64(cfg.DeployConfig.GasPriceOracleScalar))),
+			GasLimit:    uint64(cfg.DeployConfig.L2GenesisBlockGasLimit),
 		},
 	}
 
@@ -107,6 +108,7 @@ func TestInvalidDepositInFCU(t *testing.T) {
 		Timestamp:    hexutil.Uint64(l2GenesisBlock.Time() + 2),
 		Transactions: []hexutil.Bytes{l1Info, badDeposit},
 		NoTxPool:     true,
+		GasLimit:     (*eth.Uint64Quantity)(&rollupGenesis.SystemConfig.GasLimit),
 	}
 
 	// Go through the flow of FCU, GetPayload, NewPayload, FCU

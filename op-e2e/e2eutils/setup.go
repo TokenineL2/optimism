@@ -199,6 +199,7 @@ func Setup(t require.TestingT, deployParams *DeployParams, alloc *AllocParams) *
 				BatcherAddr: deployConf.BatchSenderAddress,
 				Overhead:    eth.Bytes32(common.BigToHash(new(big.Int).SetUint64(deployConf.GasPriceOracleOverhead))),
 				Scalar:      eth.Bytes32(common.BigToHash(new(big.Int).SetUint64(deployConf.GasPriceOracleScalar))),
+				GasLimit:    uint64(deployConf.L2GenesisBlockGasLimit),
 			},
 		},
 		BlockTime:              deployConf.L2BlockTime,
