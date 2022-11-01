@@ -2,7 +2,7 @@
 pragma solidity 0.8.15;
 
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
-import { SystemConfig } from "./SystemConfig.sol";
+import { SystemConfig } from "./DeployConfig.sol";
 
 /**
  * @title BaseSystemDictator
