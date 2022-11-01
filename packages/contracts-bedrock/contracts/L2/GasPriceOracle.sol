@@ -22,6 +22,7 @@ contract GasPriceOracle is Ownable, Semver {
      * @custom:spacer gasPrice
      * @notice Spacer for backwards compatibility.
      */
+    // solhint-disable-next-line var-name-mixedcase
     uint256 private spacer_1_0_32;
 
     /**
@@ -29,6 +30,7 @@ contract GasPriceOracle is Ownable, Semver {
      * @custom:spacer l1BaseFee
      * @notice Spacer for backwards compatibility.
      */
+    // solhint-disable-next-line var-name-mixedcase
     uint256 private spacer_2_0_32;
 
     /**

@@ -30,14 +30,35 @@ interface IOptimismMintableERC721 is IERC721Enumerable {
     /**
      * @notice Chain ID of the chain where the remote token is deployed.
      */
+    // solhint-disable-next-line func-name-mixedcase
+    function REMOTE_CHAIN_ID() external view returns (uint256);
+
+    /**
+     * @notice Address of the token on the remote domain.
+     */
+    // solhint-disable-next-line func-name-mixedcase
+    function REMOTE_TOKEN() external view returns (address);
+
+    /**
+     * @notice Address of the ERC721 bridge on this network.
+     */
+    // solhint-disable-next-line func-name-mixedcase
+    function BRIDGE() external view returns (address);
+
+    /**
+     * @custom:legacy
+     * @notice Chain ID of the chain where the remote token is deployed.
+     */
     function remoteChainId() external view returns (uint256);
 
     /**
+     * @custom:legacy
      * @notice Address of the token on the remote domain.
      */
     function remoteToken() external view returns (address);
 
     /**
+     * @custom:legacy
      * @notice Address of the ERC721 bridge on this network.
      */
     function bridge() external view returns (address);

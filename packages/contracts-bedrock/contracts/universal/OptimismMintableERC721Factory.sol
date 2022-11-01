@@ -25,12 +25,14 @@ contract OptimismMintableERC721Factory is Semver {
     /**
      * @notice Address of the ERC721 bridge on this network.
      */
-    address public immutable bridge;
+    // solhint-disable-next-line var-name-mixedcase
+    address public immutable BRIDGE;
 
     /**
      * @notice Chain ID for the remote network.
      */
-    uint256 public immutable remoteChainId;
+    // solhint-disable-next-line var-name-mixedcase
+    uint256 public immutable REMOTE_CHAIN_ID;
 
     /**
      * @notice Tracks addresses created by this factory.
@@ -52,8 +54,28 @@ contract OptimismMintableERC721Factory is Semver {
             "OptimismMintableERC721Factory: remote chain id cannot be zero"
         );
 
-        bridge = _bridge;
-        remoteChainId = _remoteChainId;
+        BRIDGE = _bridge;
+        REMOTE_CHAIN_ID = _remoteChainId;
+    }
+
+    /**
+     * @custom:legacy
+     * @notice Legacy getter for ERC721 bridge address.
+     *
+     * @return Address of the ERC721 bridge on this network.
+     */
+    function bridge() external view returns (address) {
+        return BRIDGE;
+    }
+
+    /**
+     * @custom:legacy
+     * @notice Legacy getter for remote chain ID.
+     *
+     * @notice Chain ID for the remote network.
+     */
+    function remoteChainId() external view returns (uint256) {
+        return REMOTE_CHAIN_ID;
     }
 
     /**
@@ -74,7 +96,7 @@ contract OptimismMintableERC721Factory is Semver {
         );
 
         address localToken = address(
-            new OptimismMintableERC721(bridge, remoteChainId, _remoteToken, _name, _symbol)
+            new OptimismMintableERC721(BRIDGE, REMOTE_CHAIN_ID, _remoteToken, _name, _symbol)
         );
 
         isOptimismMintableERC721[localToken] = true;

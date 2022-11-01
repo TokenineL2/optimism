@@ -19,17 +19,20 @@ contract OptimismMintableERC721 is ERC721Enumerable, IOptimismMintableERC721 {
     /**
      * @inheritdoc IOptimismMintableERC721
      */
-    uint256 public immutable remoteChainId;
+    // solhint-disable-next-line var-name-mixedcase
+    uint256 public immutable REMOTE_CHAIN_ID;
 
     /**
      * @inheritdoc IOptimismMintableERC721
      */
-    address public immutable remoteToken;
+    // solhint-disable-next-line var-name-mixedcase
+    address public immutable REMOTE_TOKEN;
 
     /**
      * @inheritdoc IOptimismMintableERC721
      */
-    address public immutable bridge;
+    // solhint-disable-next-line var-name-mixedcase
+    address public immutable BRIDGE;
 
     /**
      * @notice Base token URI for this token.
@@ -57,9 +60,9 @@ contract OptimismMintableERC721 is ERC721Enumerable, IOptimismMintableERC721 {
             "OptimismMintableERC721: remote token cannot be address(0)"
         );
 
-        remoteChainId = _remoteChainId;
-        remoteToken = _remoteToken;
-        bridge = _bridge;
+        REMOTE_CHAIN_ID = _remoteChainId;
+        REMOTE_TOKEN = _remoteToken;
+        BRIDGE = _bridge;
 
         // Creates a base URI in the format specified by EIP-681:
         // https://eips.ethereum.org/EIPS/eip-681
@@ -78,8 +81,29 @@ contract OptimismMintableERC721 is ERC721Enumerable, IOptimismMintableERC721 {
      * @notice Modifier that prevents callers other than the bridge from calling the function.
      */
     modifier onlyBridge() {
-        require(msg.sender == bridge, "OptimismMintableERC721: only bridge can call this function");
+        require(msg.sender == BRIDGE, "OptimismMintableERC721: only bridge can call this function");
         _;
+    }
+
+    /**
+     * @inheritdoc IOptimismMintableERC721
+     */
+    function remoteChainId() external view returns (uint256) {
+        return REMOTE_CHAIN_ID;
+    }
+
+    /**
+     * @inheritdoc IOptimismMintableERC721
+     */
+    function remoteToken() external view returns (address) {
+        return REMOTE_TOKEN;
+    }
+
+    /**
+     * @inheritdoc IOptimismMintableERC721
+     */
+    function bridge() external view returns (address) {
+        return BRIDGE;
     }
 
     /**
