@@ -113,6 +113,7 @@ contract OptimismPortal is Initializable, ResourceMetering, Semver {
      *         function for EOAs. Contracts should call the depositTransaction() function directly
      *         otherwise any deposited funds will be lost due to address aliasing.
      */
+    // solhint-disable-next-line ordering
     receive() external payable {
         depositTransaction(msg.sender, msg.value, RECEIVE_DEFAULT_GAS_LIMIT, false, bytes(""));
     }

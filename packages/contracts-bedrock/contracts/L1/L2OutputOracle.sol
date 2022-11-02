@@ -170,6 +170,7 @@ contract L2OutputOracle is OwnableUpgradeable, Semver {
      *
      * @param _proposal Represents the output proposal to delete
      */
+    // solhint-disable-next-line ordering
     function deleteL2Output(Types.OutputProposal memory _proposal) external onlyOwner {
         Types.OutputProposal memory outputToDelete = l2Outputs[latestBlockNumber];
 

@@ -27,6 +27,7 @@ contract CrossDomainMessengerLegacySpacer {
      * @custom:spacer libAddressManager
      * @notice Spacer for backwards compatibility.
      */
+    // solhint-disable-next-line var-name-mixedcase
     address private spacer_0_0_20;
 }
 
@@ -97,6 +98,7 @@ abstract contract CrossDomainMessenger is
      * @custom:spacer blockedMessages
      * @notice Spacer for backwards compatibility.
      */
+    // solhint-disable-next-line var-name-mixedcase
     mapping(bytes32 => bool) private spacer_201_0_32;
 
     /**
@@ -104,6 +106,7 @@ abstract contract CrossDomainMessenger is
      * @custom:spacer relayedMessages
      * @notice Spacer for backwards compatibility.
      */
+    // solhint-disable-next-line var-name-mixedcase
     mapping(bytes32 => bool) private spacer_202_0_32;
 
     /**
@@ -111,6 +114,7 @@ abstract contract CrossDomainMessenger is
      *         be present in this mapping if it has successfully been relayed on this chain, and
      *         can therefore not be relayed again.
      */
+    // solhint-disable-next-line var-name-mixedcase
     mapping(bytes32 => bool) public successfulMessages;
 
     /**

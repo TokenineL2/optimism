@@ -38,6 +38,7 @@ abstract contract StandardBridge {
      * @custom:spacer messenger
      * @notice Spacer for backwards compatibility.
      */
+    // solhint-disable-next-line var-name-mixedcase
     address private spacer_0_0_20;
 
     /**
@@ -45,6 +46,7 @@ abstract contract StandardBridge {
      * @custom:spacer l2TokenBridge
      * @notice Spacer for backwards compatibility.
      */
+    // solhint-disable-next-line var-name-mixedcase
     address private spacer_1_0_20;
 
     /**
